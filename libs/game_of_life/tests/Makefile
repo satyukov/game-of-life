@@ -9,7 +9,7 @@ phony_explicit:
 	@g++ $< ../game_of_life.a -o $@
 	@./$@
 
-all: common_test.run
+all: common_test.run field2d_test.run
 
 clean:
 	@rm -f *.o

@@ -2,6 +2,7 @@
 #define __GAME_OF_LIFE_GAME_OF_LIFE_H__
 
 #include "common.h"
+#include "field2d.h"
 
 // Common includes.
 #include <iostream>
