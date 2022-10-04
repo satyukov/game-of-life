@@ -199,11 +199,63 @@ void Test_Advance_Spaceship() {
                ".###");
 }
 
+void Test_CanAdvance() {
+  CHECK(!ParseField2D("...|...|###").CanAdvance());
+  CHECK(!ParseField2D("..#|..#|..#").CanAdvance());
+  CHECK(!ParseField2D("###|...|...").CanAdvance());
+  CHECK(!ParseField2D("#..|#..|#..").CanAdvance());
+  CHECK(ParseField2D("##|##").CanAdvance());
+}
+
+void Test_Advance_Large() {
+  const int n = 1000;
+  std::vector<std::vector<bool>> field_raw(n, std::vector<bool>(n));
+
+  const int m = n / 2;
+  const int dx = (n - m) / 2;
+  const int dy = (n - m) / 2;
+
+  int index = 0;
+  for (int i = 0; i < m; ++i) {
+    for (int j = 0; j < m; ++j) {
+      field_raw[i + dx][j + dy] = ((((17 * index) % 239) & 31) != 0);
+      ++index;
+    }
+  }
+
+  auto field = MakeField2D(std::move(field_raw));
+
+  auto get_alive = [](const Field2D& field) {
+    const int rows = field.GetRows();
+    const int columns = field.GetColumns();
+
+    int alive = 0;
+    for (int row = 0; row < rows; ++row) {
+      for (int column = 0; column < columns; ++column) {
+        if (field.Get(row, column)) {
+          ++alive;
+        }
+      }
+    }
+    return alive;
+  };
+
+  for (int step = 0; step < n - m; ++step) {
+    CHECK(field.CanAdvance());
+    field.Advance();
+  }
+  CHECK_EQ(get_alive(field), 2296);
+}
+
+
 void Test_Advance() {
   Test_Advance_1x1();
   Test_Advance_StillLife();
   Test_Advance_Oscillator();
   Test_Advance_Spaceship();
+  Test_Advance_Large();
+
+  Test_CanAdvance();
 }
 
 int main() {
