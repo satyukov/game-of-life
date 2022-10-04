@@ -13,6 +13,10 @@ void TestCheck() {
 }
 
 int main() {
-  std::cout << "OK Common\n";
+  StartClock();
+
+  TestCheck();
+
+  std::cout << "OK Common in " << StopClock() << "ms\n";
   return 0;
 }

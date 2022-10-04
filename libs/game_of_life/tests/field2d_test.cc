@@ -207,9 +207,12 @@ void Test_Advance() {
 }
 
 int main() {
+  StartClock();
+
   Test_Get();
   Test_ParseField2D();
   Test_Advance();
-  std::cout << "OK Field2D\n";
+
+  std::cout << "OK Field2D in " << StopClock() << "ms\n";
   return 0;
 }

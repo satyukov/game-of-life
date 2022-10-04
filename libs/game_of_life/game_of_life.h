@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "field2d.h"
+#include "time.h"
 
 // Common includes.
 #include <iostream>
