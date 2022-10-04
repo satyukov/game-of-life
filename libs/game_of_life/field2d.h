@@ -8,7 +8,7 @@ class Field2D {
  public:
   // Constructors.
   friend Field2D MakeField2D(int rows, int columns);
-  friend Field2D MakeField2D(std::vector<std::vector<bool>> field);
+  friend Field2D MakeField2D(const std::vector<std::vector<bool>>& field);
 
   bool Get(int row, int column) const;
 
@@ -24,15 +24,17 @@ class Field2D {
   void Advance();
 
  private:
-  explicit Field2D(std::vector<std::vector<bool>> field);
+  using CellType = unsigned char;
 
-  std::vector<std::vector<bool>> field_;
-  std::vector<bool> tmp1_;
-  std::vector<bool> tmp2_;
+  explicit Field2D(std::vector<std::vector<CellType>> field);
+
+  std::vector<std::vector<CellType>> field_;
+  std::vector<CellType> tmp1_;
+  std::vector<CellType> tmp2_;
 };
 
 Field2D MakeField2D(int rows, int columns);
-Field2D MakeField2D(std::vector<std::vector<bool>> field);
+Field2D MakeField2D(const std::vector<std::vector<bool>>& field);
 
 // Syntax:
 //   |  row separator
